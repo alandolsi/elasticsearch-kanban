@@ -25,7 +25,6 @@ services:
       - 9200:9200
     networks:
       - default
-      - ddev-symproject_default
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.16.2
@@ -43,7 +42,6 @@ services:
     restart: always
     networks:
       - default
-      - ddev-symproject_default
 
 networks:
   default:
