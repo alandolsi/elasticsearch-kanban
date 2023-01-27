@@ -1,0 +1,53 @@
+version: '3.7'
+
+volumes:
+  elasticsearch-data:
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - network.host=0.0.0.0
+      - discovery.type=single-node
+      - ELASTIC_USERNAME=elastic
+      - ELASTIC_PASSWORD=elastic
+      - xpack.security.enabled=true
+      - xpack.security.authc.api_key.enabled=true
+      - xpack.monitoring.collection.enabled=true
+      - ./certs/cert.pem:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - ./certs/key.pem:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - default
+      - ddev-symproject_default
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.16.2
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=elastic
+      - enterpriseSearch.host:'http://localhost:3002'
+      - enterpriseSearch.username:'elastic'
+      - enterpriseSearch.password:'elastic'
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    restart: always
+    networks:
+      - default
+      - ddev-symproject_default
+
+networks:
+  default:
+    external:
+      name: development
+
+
