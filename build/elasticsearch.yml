@@ -1,0 +1,9 @@
+node.name: webteam-cluster
+discovery.seed_hosts: []
+network.host: 0.0.0.0
+discovery.type: 'single-node'
+cluster.name: "webteam-elastic"
+xpack.license.self_generated.type: basic
+xpack.security.enabled: true
+xpack.monitoring.collection.enabled: true
+
