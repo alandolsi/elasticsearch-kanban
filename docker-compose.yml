@@ -5,12 +5,16 @@ services:
     build:
       context: ./build/es
       dockerfile: Dockerfile
+      args:
+        VERSION: 7.17.0
+
     environment:
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=elastic
-
+      - path.repo=/usr/share/elasticsearch/backup
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./backups:/usr/share/elasticsearch/backup
     ports:
       - 9200:9200
     restart: always
@@ -19,11 +23,6 @@ services:
     build:
       context: ./build/kb
       dockerfile: Dockerfile
-    environment:
-      - ELASTICSEARCH_HOSTS=http://192.168.178.94:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=elastic
-      - enterpriseSearch.host:'http://192.168.178.94:3002'
     ports:
       - 5601:5601
     depends_on:
