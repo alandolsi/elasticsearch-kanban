@@ -5,5 +5,4 @@ discovery.type: 'single-node'
 cluster.name: "webteam-elastic"
 xpack.license.self_generated.type: basic
 xpack.security.enabled: true
-cluster.routing.allocation.disk.watermark.enable_for_single_data_node: true
 
