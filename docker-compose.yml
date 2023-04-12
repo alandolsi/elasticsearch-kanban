@@ -6,7 +6,7 @@ services:
       context: ./build/es
       dockerfile: Dockerfile
       args:
-        VERSION: 7.17.0
+        VERSION: 7.17.9
 
     environment:
       - ELASTIC_USERNAME=elastic
@@ -23,6 +23,8 @@ services:
     build:
       context: ./build/kb
       dockerfile: Dockerfile
+      args:
+        VERSION: 7.17.9
     ports:
       - 5601:5601
     depends_on:
